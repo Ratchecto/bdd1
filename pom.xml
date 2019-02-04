@@ -10,8 +10,8 @@
     <dependencies>
         <dependency>
             <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-sync</artifactId>
-            <version>3.9.1</version>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.4.1</version>
         </dependency>
     </dependencies>
 
