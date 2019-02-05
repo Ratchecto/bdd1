@@ -71,5 +71,14 @@ public class extract {
             spells.add(spell);
         }
         System.out.println(spells.size());
+
+        Mongo.connect();
+        Mongo.reset();
+        for (Spell s: spells){
+            Mongo.addSpell(s);
+        }
+
     }
+
+
 }

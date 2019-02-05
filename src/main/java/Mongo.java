@@ -16,19 +16,22 @@ public class Mongo {
 
     }
 
-    public static void addSpell(){
+    public static void addSpell(Spell s){
         BasicDBObject SpellToSend = new BasicDBObject();
-        SpellToSend.put("name", "hihihihi");
-        SpellToSend.put("level","hihih");
+        SpellToSend.put("name", s.getName());
+        SpellToSend.put("level",s.getLevel());
 
         BasicDBObject comp = new BasicDBObject();
-            String [] a = {"V","S"};
-            for (int i =0; i<a.length; i++){
-                comp.put(Integer.toString(i),a[i]);
+            for (int i =0; i<s.getComponents().size(); i++){
+                comp.put(Integer.toString(i),s.getComponents().get(i));
             }
         SpellToSend.put("components",comp);
-        SpellToSend.put("spell_resistance", "Baeldung");
+        SpellToSend.put("spell_resistance", s.getRes());
         spellColl.insert(SpellToSend);
+    }
+
+    public static void reset(){
+        spellColl.drop();
     }
 
 }
