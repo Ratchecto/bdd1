@@ -55,4 +55,16 @@ public class Spell {
         this.components = components;
         this.res = res;
     }
+    public int getLevelInt(){
+        String[] s = getLevel().split("wizard");
+        if (s.length >=2){
+            String  level = s[1].split(",")[0];
+            return Integer.parseInt(level.trim());
+        }else{
+            String level = s[0].split(",")[0].replaceAll("[^\\d.]", "");
+            return Integer.parseInt(level.trim());
+        }
+
+
+    }
 }

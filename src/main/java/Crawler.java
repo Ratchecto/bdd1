@@ -4,7 +4,8 @@ public class Crawler {
 
         Mongo.connect();
         //Mongo.addSpell();
-        SQlite.connect();
+        //SQlite.connect();
+        System.out.println("azertyui".split("alut")[0]);
 
     }
 }

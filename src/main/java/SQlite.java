@@ -28,46 +28,21 @@ public class SQlite {
     public static void init() {
 
             try {
-                stmt.execute("DROP TABLE Spell");
-                String sql = "CREATE TABLE IF NOT EXISTS Spell" // IF NOT EXISTS
+                stmt.execute("DROP TABLE Spellll");
+                String sql = "CREATE TABLE IF NOT EXISTS Spellll" // IF NOT EXISTS
                         + "(ID INTEGER PRIMARY KEY     AUTOINCREMENT,"
                         + " NAME           TEXT    NOT NULL, "
                         + " LEVEL          INT     NOT NULL, "
-                        + " RESISTANCE     INT     NOT NULL)";
+                        + " COMPONENT      TEXT     NOT NULL, "
+                        + " RESISTANCE     TEXT     NOT NULL)";
                 stmt.executeUpdate(sql);
 
-                sql = "CREATE TABLE IF NOT EXISTS Component "
-                        + "(ID INTEGER PRIMARY KEY     AUTOINCREMENT,"
-                        + " NAME           TEXT    NOT NULL)";
-                stmt.executeUpdate(sql);
-
-                stmt.execute("DROP TABLE ComponentsBySpells");
-                sql = "CREATE TABLE IF NOT EXISTS ComponentsBySpells "
-                        + "(ID INTEGER PRIMARY KEY     AUTOINCREMENT,"
-                        + " INDEXSPELL     INT     NOT NULL,"
-                        + " INDEXCOMPONENT INT     NOT NULL)";
-                stmt.executeUpdate(sql);
 
                 // Pour connaitre le nombre de sort deja presents
                 sql = "SELECT COUNT(*) FROM Spell";
                 ResultSet result = stmt.executeQuery(sql);
                 int nbr = result.getInt(1);
 
-                // Inserer les composants
-                sql = "DELETE FROM Component;";
-                stmt.executeUpdate(sql);
-                sql = "INSERT INTO Component (ID, NAME) VALUES (1,'V');";
-                stmt.executeUpdate(sql);
-                sql = "INSERT INTO Component (ID, NAME) VALUES (2,'S');";
-                stmt.executeUpdate(sql);
-                sql = "INSERT INTO Component (ID, NAME) VALUES (3,'M');";
-                stmt.executeUpdate(sql);
-                sql = "INSERT INTO Component (ID, NAME) VALUES (4,'F');";
-                stmt.executeUpdate(sql);
-                sql = "INSERT INTO Component (ID, NAME) VALUES (5,'DF');";
-                stmt.executeUpdate(sql);
-                sql = "INSERT INTO Component (ID, NAME) VALUES (6,'AF');";
-                stmt.executeUpdate(sql);
 
             } catch (Exception e) {
                 System.err.println(e.getClass().getName() + ": "
@@ -78,9 +53,21 @@ public class SQlite {
 
     }
 
-    public static void addSpell(){
+    public void addSpell(Spell spell)  {
+        try {
+            String sql = "INSERT INTO Spell  (NAME,LEVEl, RESISTANCE) VALUES ('"
+                    + spell.getName() + "', " + spell.getLevelInt() + ", "
+                    + spell.getRes() + ");";
+            stmt.executeUpdate(sql);
+
+            } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
 
     }
+
+
+
 
 
 
