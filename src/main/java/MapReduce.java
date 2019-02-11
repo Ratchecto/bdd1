@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MapReduce
 {
-    private static List<Map.Entry<String[],String>> MapReduce(List<Spell> spells)
+    public static List<Map.Entry<String[],String>> MapReduce(List<Spell> spells)
     {
 
         List<Map.Entry<String[],String>> resultFinal=new ArrayList<Map.Entry<String[],String>>();
@@ -14,9 +14,11 @@ public class MapReduce
             {
                 String[] key=new String[2];
                 key[0]=spell.getName();
-                key[1]= spell.getLevel();
-                keyValues.put(key,spell.getComponents().get(j));
+                key[1]=String.valueOf( spell.getLevelInt());
+                //int a=0;
+                keyValues.put(key,spell.getComponents().get(j).trim());
             }
+            int a=0;
             resultFinal.addAll(Reduce(keyValues));
         }
         return resultFinal;
