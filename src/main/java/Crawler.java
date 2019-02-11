@@ -2,9 +2,9 @@
 public class Crawler {
     public static void main(String[] args) {
 
-        //Mongo.connect();
+        Mongo.connect();
         //Mongo.addSpell();
-        //SQlite.connect();
+        SQlite.connect();
 
     }
 }

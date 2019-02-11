@@ -23,7 +23,7 @@ public class extract {
         ArrayList<String> compo = new ArrayList<String>();
         ArrayList<Spell> spells = new ArrayList<Spell>();
 
-        for(int i = 1 ; i < 5 ; i++) {
+        for(int i = 1 ; i < 1000 ; i++) {
 
             Document doc = Jsoup.connect("http://www.dxcontent.com/SDB_SpellBlock.asp?SDBID="+i).get();
             Elements name = doc.getElementsByClass("heading");
