@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class SQlite {
@@ -55,9 +56,9 @@ public class SQlite {
 
     public void addSpell(Spell spell)  {
         try {
-            String sql = "INSERT INTO Spell  (NAME,LEVEl, RESISTANCE) VALUES ('"
-                    + spell.getName() + "', " + spell.getLevelInt() + ", "
-                    + spell.getRes() + ");";
+            String sql = "INSERT INTO Spell  (NAME,LEVEl, RESISTANCE,COMPONENT) VALUES ('"
+                    + spell.getName() + "', " + spell.getLevelInt() + ", '"
+                    + spell.getRes() + "','" + spell.getComponentInOne()+  "');";
             stmt.executeUpdate(sql);
 
             } catch (SQLException e1) {
@@ -66,6 +67,21 @@ public class SQlite {
 
     }
 
+    public ArrayList<String> getSpellForPito()  {
+        ArrayList<String> spellForPito = new ArrayList<String>();
+        try {
+            String requete = "SELECT NAME FROM Spell "
+                    + "WHERE Spell.LEVEL < 5 AND COMPONENT LIKE '%V%'";
+
+            ResultSet result = stmt.executeQuery(requete);
+            while (result.next()) {
+                spellForPito.add(result.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return spellForPito;
+    }
 
 
 

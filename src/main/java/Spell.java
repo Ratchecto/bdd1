@@ -67,4 +67,13 @@ public class Spell {
 
 
     }
+    public String getComponentInOne (){
+        StringBuilder sb = new StringBuilder();
+        for (String s : components)
+        {
+            sb.append(s);
+        }
+
+        return sb.toString();
+    }
 }
