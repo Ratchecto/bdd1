@@ -18,7 +18,7 @@ public class Spell {
     }
 
     public String getName() {
-        return name;
+        return name.replaceAll("'","");
     }
 
     public void setName(String name) {
@@ -62,7 +62,11 @@ public class Spell {
             return Integer.parseInt(level.trim());
         }else{
             String level = s[0].split(",")[0].replaceAll("[^\\d.]", "");
-            return Integer.parseInt(level.trim());
+            int l = Integer.parseInt(level.trim());
+            l= l - 2*l;
+            if (l==0)
+                l=-99;
+            return l ;// Inférieur à 0 si pas un sort de Wizard
         }
 
 

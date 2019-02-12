@@ -40,7 +40,7 @@ public class SQlite {
 
 
                 // Pour connaitre le nombre de sort deja presents
-                sql = "SELECT COUNT(*) FROM Spell";
+                sql = "SELECT COUNT(*) FROM Spellll";
                 ResultSet result = stmt.executeQuery(sql);
                 int nbr = result.getInt(1);
 
@@ -54,11 +54,13 @@ public class SQlite {
 
     }
 
-    public void addSpell(Spell spell)  {
+    public static void addSpell(Spell spell)  {
         try {
-            String sql = "INSERT INTO Spell  (NAME,LEVEl, RESISTANCE,COMPONENT) VALUES ('"
+            String sql = "INSERT INTO Spellll  (NAME,LEVEl, RESISTANCE,COMPONENT) VALUES ('"
                     + spell.getName() + "', " + spell.getLevelInt() + ", '"
                     + spell.getRes() + "','" + spell.getComponentInOne()+  "');";
+            System.out.println(sql);
+
             stmt.executeUpdate(sql);
 
             } catch (SQLException e1) {
@@ -67,15 +69,16 @@ public class SQlite {
 
     }
 
-    public ArrayList<String> getSpellForPito()  {
+    public static ArrayList<String> getSpellForPito()  {
         ArrayList<String> spellForPito = new ArrayList<String>();
         try {
-            String requete = "SELECT NAME FROM Spell "
-                    + "WHERE Spell.LEVEL < 5 AND COMPONENT LIKE '%V%'";
+            String requete = "SELECT NAME , LEVEL , COMPONENT FROM Spellll "
+                    + "WHERE LEVEL < 5 AND COMPONENT LIKE ' V'" +
+                    "AND LEVEL >= 0";
 
             ResultSet result = stmt.executeQuery(requete);
             while (result.next()) {
-                spellForPito.add(result.getString(1));
+                spellForPito.add(result.getString(1) + "  "+ result.getInt(2) + " "+ result.getString(3));
             }
         } catch (SQLException e) {
             e.printStackTrace();

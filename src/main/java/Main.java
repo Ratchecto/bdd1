@@ -7,26 +7,26 @@ public class Main {
 
         /////////////  PARTIE 1 ///////////////////
         /*ArrayList<Spell> listSpell = Crawler.retrieveSpell(1975);
-        Mongo.connect();
         Mongo.addSpells(listSpell);
         */
-        List<Spell> spells=Mongo.retrieveSpells();
-        List<Map.Entry<String[],String>> result=MapReduce.MapReduce(spells);
+        /*for(String sort : MapReduce.mapReduceForSpell()){
+            System.out.println(sort);
+        } */
 
-        //SQlite.connect();
-        for (int i=0;i<result.size();i++)
-        {
-            String[] key=result.get(i).getKey();
-            String keyString="";
-            for(int j=0;j<key.length;j++)
-            {
-                if(j%2==1)
-                {
-                    keyString+=" ";
-                }
-                keyString+=key[j];
-            }
-             //System.out.println(keyString+" "+result.get(i).getValue());
+
+        SQlite.connect();
+        //SQlite.init();
+        /*for(Spell sort : Mongo.retrieveSpells()){
+            SQlite.addSpell(sort);
+
+        }*/
+
+        for (String s : SQlite.getSpellForPito()){
+            System.out.println(s);
         }
+
+
+
+
     }
 }

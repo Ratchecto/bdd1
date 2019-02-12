@@ -11,20 +11,25 @@ import java.util.List;
 public class Mongo {
 
     private  static MongoCollection<Document>  spellColl;
+    private static Boolean connected= false ;
 
     /**
      * Connection à la base de données (utilisation d'un service gratuit en ligne
      * pour faciliter le travail en commun)
      */
     public static void connect(){
-        MongoClientURI uri = new MongoClientURI("mongodb://user:password1@ds247698.mlab.com:47698/labdd");
-        MongoClient client = new MongoClient(uri);
-        MongoDatabase db = client.getDatabase(uri.getDatabase());
-        spellColl = db.getCollection("Speeeeelll");
-
+        if( ! connected) {
+            MongoClientURI uri = new MongoClientURI("mongodb://user:password1@ds247698.mlab.com:47698/labdd");
+            MongoClient client = new MongoClient(uri);
+            MongoDatabase db = client.getDatabase(uri.getDatabase());
+            spellColl = db.getCollection("Speeeeelll");
+            connected = true;
+        }
     }
 
     public static void addSpells( ArrayList<Spell> ss){
+        if (!connected)
+            connect();
         ArrayList<Document> spellsToSend = new ArrayList<Document>();
         Document spellToSend =null;
         for( Spell s : ss) {
@@ -46,7 +51,8 @@ public class Mongo {
 
     public static List<Spell> retrieveSpells()
     {
-        connect();
+        if (!connected)
+            connect();
         MongoCursor<Document> cursor  = spellColl.find().iterator();
         List<Spell> spells=new ArrayList<Spell>();
         while (cursor.hasNext())

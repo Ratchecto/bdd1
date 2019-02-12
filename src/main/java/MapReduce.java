@@ -37,7 +37,7 @@ public class MapReduce
             int level=Integer.parseInt(key[1]);
             if(value.equals("V"))
             {
-                if(level<=4)
+                if(level >=0 && level<=4)
                 {
                     result.add(item);
                 }
@@ -67,6 +67,29 @@ public class MapReduce
             System.out.println(keyValues.toString());
         }
         return resultFinal;
+    }
+
+    public static ArrayList<String> mapReduceForSpell (){
+        List<Spell> spells=Mongo.retrieveSpells();
+        List<Map.Entry<String[],String>> result=MapReduce.MapReduce(spells);
+
+        ArrayList<String> SpellForPito = new ArrayList<String>();
+
+        for (int i=0;i<result.size();i++)
+        {
+            String[] key=result.get(i).getKey();
+            String keyString="";
+            for(int j=0;j<key.length;j++)
+            {
+                if(j%2==1)
+                {
+                    keyString+=" ";
+                }
+                keyString+=key[j];
+            }
+            SpellForPito.add(keyString+" "+result.get(i).getValue());
+        }
+        return SpellForPito ;
     }
 
     private static List<Map.Entry<String,String>> ReducePageRank(HashMap<String,String> keyValues)
