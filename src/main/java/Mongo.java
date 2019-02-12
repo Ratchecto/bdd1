@@ -24,18 +24,24 @@ public class Mongo {
 
     }
 
-    public static void addSpell(Spell s){
-        Document SpellToSend = new Document();
-        SpellToSend.put("name", s.getName());
-        SpellToSend.put("level",s.getLevel());
+    public static void addSpells( ArrayList<Spell> ss){
+        ArrayList<Document> spellsToSend = new ArrayList<Document>();
+        Document spellToSend =null;
+        for( Spell s : ss) {
+            spellToSend = new Document();
+            spellToSend.put("name", s.getName());
+            spellToSend.put("level", s.getLevel());
 
-        Document comp = new Document();
-            for (int i =0; i<s.getComponents().size(); i++){
-                comp.put(Integer.toString(i),s.getComponents().get(i));
+            Document comp = new Document();
+            for (int i = 0; i < s.getComponents().size(); i++) {
+                comp.put(Integer.toString(i), s.getComponents().get(i));
             }
-        SpellToSend.put("components",comp);
-        SpellToSend.put("spell_resistance", s.getRes());
-        spellColl.insertOne(SpellToSend);
+            spellToSend.put("components", comp);
+            spellToSend.put("spell_resistance", s.getRes());
+            spellsToSend.add(spellToSend);
+        }
+        spellColl.insertMany(spellsToSend);
+
     }
 
     public static List<Spell> retrieveSpells()
