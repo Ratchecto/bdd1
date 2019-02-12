@@ -9,9 +9,9 @@ public class Main {
         /*ArrayList<Spell> listSpell = Crawler.retrieveSpell(1975);
         Mongo.addSpells(listSpell);
         */
-        /*for(String sort : MapReduce.mapReduceForSpell()){
+        for(String sort : MapReduce.mapReduceForSpell()){
             System.out.println(sort);
-        } */
+        }
 
 
         SQlite.connect();

@@ -2,40 +2,39 @@ import java.util.*;
 
 public class MapReduce
 {
-    public static List<Map.Entry<String[],String>> MapReduce(List<Spell> spells)
+    public static List<Map.Entry<String[],ArrayList<String>>> MapReduce(List<Spell> spells)
     {
 
-        List<Map.Entry<String[],String>> resultFinal=new ArrayList<Map.Entry<String[],String>>();
+        List<Map.Entry<String[],ArrayList<String>>> resultFinal=new ArrayList<Map.Entry<String[],ArrayList<String>>>();
         for (int i=0;i<spells.size();i++)
         {
-            HashMap<String[],String> keyValues=new HashMap<String[], String>();
+            HashMap<String[],ArrayList<String>> keyValues=new HashMap<String[], ArrayList<String>>();
             Spell spell=spells.get(i);
-            for(int j=0;j<spell.getComponents().size();j++)
-            {
+
                 String[] key=new String[2];
                 key[0]=spell.getName();
                 key[1]=String.valueOf( spell.getLevelInt());
                 //int a=0;
-                keyValues.put(key,spell.getComponents().get(j).trim());
-            }
+                keyValues.put(key,spell.getComponents());
+
             int a=0;
             resultFinal.addAll(Reduce(keyValues));
         }
         return resultFinal;
     }
 
-    private static List<Map.Entry<String[],String>> Reduce(HashMap<String[],String> keyValues)
+    private static List<Map.Entry<String[],ArrayList<String>>> Reduce(HashMap<String[],ArrayList<String>> keyValues)
     {
 
-        List<Map.Entry<String[],String>> result=new ArrayList<Map.Entry<String[], String>>();
-        Iterator<Map.Entry<String[],String>> it=keyValues.entrySet().iterator();
+        List<Map.Entry<String[],ArrayList<String>>> result=new ArrayList<Map.Entry<String[], ArrayList<String>>>();
+        Iterator<Map.Entry<String[],ArrayList<String>>> it=keyValues.entrySet().iterator();
         while (it.hasNext())
         {
-            Map.Entry<String[],String> item=(Map.Entry<String[], String>)it.next();
+            Map.Entry<String[],ArrayList<String>> item=(Map.Entry<String[], ArrayList<String>>)it.next();
             String[] key=item.getKey();
-            String value=item.getValue();
+            ArrayList<String > value=item.getValue();
             int level=Integer.parseInt(key[1]);
-            if(value.equals("V"))
+            if(value.size() == 1 && value.get(0).equals("V"))
             {
                 if(level >=0 && level<=4)
                 {
@@ -71,7 +70,7 @@ public class MapReduce
 
     public static ArrayList<String> mapReduceForSpell (){
         List<Spell> spells=Mongo.retrieveSpells();
-        List<Map.Entry<String[],String>> result=MapReduce.MapReduce(spells);
+        List<Map.Entry<String[],ArrayList<String>>> result=MapReduce.MapReduce(spells);
 
         ArrayList<String> SpellForPito = new ArrayList<String>();
 
@@ -97,6 +96,12 @@ public class MapReduce
 
         List<Map.Entry<String,String>> result=new ArrayList<Map.Entry<String, String>>();
         Iterator<Map.Entry<String,String>> it=keyValues.entrySet().iterator();
+        double sumPageRank = 0;
+        double dampingFactor = 0.85;
+
+        for(int i=0;i<keyValues.size();i++) {
+            //sumPageRank += keyValues.
+        }
         while (it.hasNext())
         {
 
