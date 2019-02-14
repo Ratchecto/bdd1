@@ -45,28 +45,6 @@ public class MapReduce
         return result;
     }
 
-    //MapReduce pour les pages
-    public static List<Map.Entry<String,String>> MapReducePages(List<Page> pages)
-    {
-
-        List<Map.Entry<String,String>> resultFinal=new ArrayList<Map.Entry<String,String>>();
-        for (int i=0;i<pages.size();i++)
-        {
-            HashMap<String,String> keyValues=new HashMap<String, String>();
-            Page page=pages.get(i);
-            for(int j=0;j<page.getNeighboors().size();j++)
-            {
-                String key = page.getName();
-                String[] tab = new String[2];
-                tab[0] = String.valueOf(page.getPageRank());
-                tab[1] = String.valueOf(page.getNeighboors());
-                keyValues.put(key,"PageRank : "+tab[0]+", Voisins :"+tab[1]);
-            }
-            resultFinal.addAll(ReducePageRank(keyValues));
-            System.out.println(keyValues.toString());
-        }
-        return resultFinal;
-    }
 
     public static ArrayList<String> mapReduceForSpell (){
         List<Spell> spells=Mongo.retrieveSpells();
@@ -91,21 +69,66 @@ public class MapReduce
         return SpellForPito ;
     }
 
-    private static List<Map.Entry<String,String>> ReducePageRank(HashMap<String,String> keyValues)
+    public void MapReducePageRank(List<Page> pages)
     {
 
-        List<Map.Entry<String,String>> result=new ArrayList<Map.Entry<String, String>>();
-        Iterator<Map.Entry<String,String>> it=keyValues.entrySet().iterator();
-        double sumPageRank = 0;
-        double dampingFactor = 0.85;
-
-        for(int i=0;i<keyValues.size();i++) {
-            //sumPageRank += keyValues.
+        for (int i=0;i<pages.size();i++)
+        {
+            HashMap<String[],Double> keyValues=new HashMap<String[], Double>();
+            Page page=pages.get(i);
+            for(int j=0;j<page.getNeighboors().size();j++)
+            {
+                String[] key = new String[2];
+                key[0]= page.getNeighboors().get(j).getName();
+                key[1]=page.getName();
+                double value=page.getPageRank()/page.getNeighboors().size();
+                keyValues.put(key,value);
+            }
+            ReducePageRank((keyValues));
+            int a=0;
         }
+
+
+        for (int i=0;i<pages.size();i++)
+        {
+            Page page=pages.get(i);
+            String name=page.getName();
+            Double received=(Double) 0.0;
+            if(resultPageRank.containsKey(name))
+            {
+                received= resultPageRank.get(name);
+
+            }
+            double pr= ((1-page.DAMPINGFACTOR)+(page.DAMPINGFACTOR*received));
+            System.out.println("pagerank "+page.getName()+" "+pr);
+            page.setPageRank(pr);
+        }
+    }
+
+    private void ReducePageRank(HashMap<String[],Double> keyValues)
+    {
+
+        Iterator<Map.Entry<String[],Double>> it=keyValues.entrySet().iterator();
         while (it.hasNext())
         {
+            Map.Entry<String[],Double> item=it.next();
+            String itemKey[]=item.getKey();
+            String key=itemKey[0];
+            Double value=item.getValue();
+            if(!resultPageRank.containsKey(key))
+            {
 
+                resultPageRank.put(key,value);
+            }
+            else
+            {
+                Double newValue=resultPageRank.get(key)+value;
+                resultPageRank.put(key,newValue);
+            }
         }
-        return result;
     }
+
+
+
+
 }
