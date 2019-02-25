@@ -10,13 +10,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * La class Mongo permet d'ajouter et stocker toutes nos donnees a la base de donnees, afin d'y faire des requetes
+ */
 public class Mongo {
 
     private  static MongoCollection<Document>  spellColl;
     private static Boolean connected= false ;
 
     /**
-     * Connection à la base de données (utilisation d'un service gratuit en ligne
+     * Connection a la base de donnees (utilisation d'un service gratuit en ligne
      * pour faciliter le travail en commun)
      */
     public static void connect(){
@@ -29,6 +32,10 @@ public class Mongo {
         }
     }
 
+    /**
+     * Cette methode permet d'ajouter un sort a partir de la Hashmap instancier dans la class MapReduce
+     * @param ss : le sort que l'on souhaite ajouter a la DB, contenant son nom, son niveau et sa composante
+     */
     public static void addSpells( ArrayList<Spell> ss){
         if (!connected)
             connect();
@@ -51,6 +58,10 @@ public class Mongo {
 
     }
 
+    /**
+     * Cette methode permet de recuperer tout les sorts a partir du conteneur Iterator
+     * @return La liste des sort contenu dans MDB
+     */
     public static List<Spell> retrieveSpells()
     {
         if (!connected)
@@ -76,6 +87,9 @@ public class Mongo {
         return  spells;
     }
 
+    /**
+     * Cette methode reinitialise la BDD
+     */
     public static void reset(){
         spellColl.drop();
     }

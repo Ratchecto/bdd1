@@ -9,9 +9,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/**
+ * Cette classe permet d'instancier un crawler. Le crawler a pour but de récuperer toutes les données d'une page web
+ * Pour notre cas se seront tous les sorts dont notre magicien a besoin
+ */
 public class Crawler {
 
+    /* Méthode permettant*/
 
+    /**
+     * Cette fonction va permettre de detecter tout les liens de page contenant des sorts a l'aide d'expressions regulieres
+     * @param nbSpell (le nombre de sort que notre liste va recuprer grace au crawler)
+     * @return une liste de tout les sorts recuperer ( le nom du sort, le niveau et la composante)
+     * @throws IOException releve une exception si une erreur concernant les pages web est detectee
+     */
     public static ArrayList<Spell> retrieveSpell(int nbSpell) throws IOException{
         ArrayList<String> splitContentLevel = new ArrayList<String>();
         ArrayList<String> splitContentComponents = new ArrayList<String>();

@@ -3,7 +3,9 @@ package Objects;
 import java.sql.*;
 import java.util.ArrayList;
 
-
+/**
+ * La class SQLite permet de recuperer les sorts dont le magicien a besoin en SQLite
+ */
 public class SQlite {
     private static Statement stmt = null;
 
@@ -28,6 +30,9 @@ public class SQlite {
         }
     }
 
+    /**
+     *  Methode lançant la requete  SQLite permetttant la creation des tables pour ajouter les sorts
+     */
     public static void init() {
 
             try {
@@ -56,6 +61,10 @@ public class SQlite {
 
     }
 
+    /**
+     * Methode lancant la requete  SQLite permetttant d'ajouter un sort a la table
+     * @param spell que l'on souhaite à la DB
+     */
     public static void addSpell(Spell spell)  {
         try {
             String sql = "INSERT INTO Spellll  (NAME,LEVEl, RESISTANCE,COMPONENT) VALUES ('"
@@ -71,6 +80,10 @@ public class SQlite {
 
     }
 
+    /**
+     * Methode lancant la requete  SQLite permettant de recuperer les sorts dont Pito le magicien a besoin
+     * @return les sorts en question
+     */
     public static ArrayList<String> getSpellForPito()  {
         ArrayList<String> spellForPito = new ArrayList<String>();
         try {

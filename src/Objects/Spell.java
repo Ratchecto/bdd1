@@ -3,7 +3,11 @@ package Objects;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * La class Spell permet d'intancier les sorts, que l'on va recuperer a partir du crawler
+ */
 public class Spell {
+    // paramètre du constructeur
     String name;
     String level;
     ArrayList<String> components = new ArrayList<String>();
@@ -19,26 +23,50 @@ public class Spell {
                 '}';
     }
 
+    /**
+     * Recupere le nom du sort
+     * @return  String le nom du sort
+     */
     public String getName() {
         return name.replaceAll("'","");
     }
 
+    /**
+     * Caracterise le nom du sort
+     * @param name : le nom du sort que l'on souhaite contruire
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return le niveau du sort
+     */
     public String getLevel() {
         return level;
     }
 
+    /**
+     * Caracterise le niveau du sort
+     * @param level : la niveau que l'on souhaite associer au sort
+     */
     public void setLevel(String level) {
         this.level = level;
     }
 
+    /**
+     *
+     * @return la composante du sort
+     */
     public ArrayList<String> getComponents() {
         return components;
     }
 
+    /**
+     * Caracterise la composante du sort
+     * @param components : la composante  que l'on souhaite associer au sort
+     */
     public void setComponents(ArrayList<String> components) {
 
         for(int i=0;i<components.size();i++)
@@ -61,6 +89,11 @@ public class Spell {
         setComponents(components);
         this.res = res;
     }
+
+    /**
+     *
+     * @return uniquement le level du Wizard
+     */
     public int getLevelInt(){
         String[] s = getLevel().split("wizard");
         if (s.length >=2){
@@ -77,6 +110,11 @@ public class Spell {
 
 
     }
+
+    /**
+     *
+     * @return toutes les compoantes d'un sort
+     */
     public String getComponentInOne (){
         StringBuilder sb = new StringBuilder();
         for (String s : components)

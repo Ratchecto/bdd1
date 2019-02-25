@@ -2,10 +2,22 @@ package Objects;
 
 import java.util.*;
 
+/**
+ * La class MapReduce a pour but de faire des operations et requetes rapidement sur une base de donnees assez lourdes.
+ * Les methodes du MapReduce nous permettent d'acceder facilement a des donnees complexes.
+ */
 public class MapReduce
 {
     HashMap<String,Double> resultPageRank=new HashMap<String, Double>();
 
+    /**
+     *Cette methode va nous permettre d'organiser les donnees recuperees a l'aide du Crawler
+     * Nous allons agir sur la HashMap qui est une liste de cles-valeurs unique.
+     * Pour eviter les doublons de sort
+     * @param spells : correspond a la liste des sorts récuperes grace au crawler
+     * @return resultFinal : Lorsqu'on fait appel a cette methode, la liste de sorts est organisee en couple de cles
+     * (nom de sort et niveau) associes à des valeurs (composantes du sort)
+     */
     private List<Map.Entry<String[],ArrayList<String>>> MapReduce(List<Spell> spells)
     {
         List<Map.Entry<String[],ArrayList<String>>> resultFinal=new ArrayList<Map.Entry<String[],ArrayList<String>>>();
@@ -28,6 +40,11 @@ public class MapReduce
         return resultFinal;
     }
 
+    /**
+     * Cette methode va permettre de trier les sort adapte au magicien ( type verbale et de niveau inferieur ou egal à 4
+     * @param keyValues : Liste des formules que le magicien pourrait reciter associes à un nom de sort et un niveau
+     * @return result : une liste contenant uniquement les sort de type verbales et de niveau inferieur ou egal à 4
+     */
     private List<Map.Entry<String[],ArrayList<String>>> Reduce(HashMap<String[],ArrayList<String>> keyValues)
     {
 
@@ -76,6 +93,10 @@ public class MapReduce
         return SpellForPito ;
     }
 
+    /**
+     * Cette methode permet de calculer le Pagerank de chaque page web recuperee par le crawler
+     * @param pages : la page dont on souhaite calculer le PageRank ou mettre en place un nouveau voisin
+     */
     public void MapReducePageRank(List<Page> pages)
     {
 
@@ -98,7 +119,7 @@ public class MapReduce
             int a=0;
         }
 
-        //Misa a jour des pages
+        //Mise a jour des pages voisines et des PageRank
         for (int i=0;i<pages.size();i++)
         {
             Page page=pages.get(i);
@@ -115,6 +136,11 @@ public class MapReduce
         }
     }
 
+    /**
+     * A partir de cette methode on va iterer sur toutes les pages. Si la cle n existe pas, on cree une nouvelle page
+     * Suivant d'un pageRank, sinon on associe à cette cle un PageRank que l'on calcul (mise a jour)
+     * @param keyValues : la cle de la page
+     */
     private void ReducePageRank(HashMap<String[],Double> keyValues)
     {
 
